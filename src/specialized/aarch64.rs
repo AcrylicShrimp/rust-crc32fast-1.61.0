@@ -7,6 +7,10 @@ pub struct State {
 
 impl State {
     pub fn new(state: u32) -> Option<Self> {
+        println!(
+            "std::arch::is_aarch64_feature_detected!(\"crc\"): {}",
+            std::arch::is_aarch64_feature_detected!("crc")
+        );
         if std::arch::is_aarch64_feature_detected!("crc") {
             // SAFETY: The conditions above ensure that all
             //         required instructions are supported by the CPU.
@@ -38,6 +42,8 @@ impl State {
 // target_feature is necessary to allow rustc to inline the crc32* wrappers
 #[target_feature(enable = "crc")]
 pub unsafe fn calculate(crc: u32, data: &[u8]) -> u32 {
+    println!("Using arch::crc32* wrappers");
+
     let mut c32 = !crc;
     let (pre_quad, quads, post_quad) = data.align_to::<u64>();
 
