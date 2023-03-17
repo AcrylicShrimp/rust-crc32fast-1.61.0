@@ -13,6 +13,10 @@ fn main() {
     if minor >= 27 {
         println!("cargo:rustc-cfg=crc32fast_stdarchx86");
     }
+
+    if minor >= 61 {
+        println!("cargo:rustc-cfg=crc32fast_stdarchaarch64");
+    }
 }
 
 fn rustc_minor_version() -> Option<u32> {
